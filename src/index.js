@@ -1,10 +1,18 @@
 const express = require('express');
+const cors = require('cors');
+const boardRouter = require('./routes/board.route');
+const taskRouter = require('./routes/task.route');
 const app = express();
-const appRouter = require('../routes/app.route.js');
 require('dotenv').config();
 
-app.use('/app', appRouter);
+// using cors
+app.use(cors());
+app.use(express.json());
 
-app.listen(process.env.PORT, () =>{
-    console.log("App is up!")
+// using board routes
+app.use('/board', boardRouter);
+app.use('/task', taskRouter);
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is up on port ${process.env.PORT}`)
 });
