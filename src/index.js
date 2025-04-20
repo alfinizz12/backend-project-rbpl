@@ -1,18 +1,22 @@
-const express = require('express');
-const cors = require('cors');
-const boardRouter = require('./routes/board.route');
-const taskRouter = require('./routes/task.route');
-const app = express();
-require('dotenv').config();
+// import module files
+import express from 'express';
+import cors from 'cors';
+import startServer from './startServer.js';
+import cookieParser from 'cookie-parser';
+import routes from './routes/api.js'
+import dotenv from 'dotenv';
 
-// using cors
+// using app
+const app = express();
+dotenv.config();
+
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
-// using board routes
-app.use('/board', boardRouter);
-app.use('/task', taskRouter);
+// using routes
+routes(app);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is up on port ${process.env.PORT}`)
-});
+// starting server - sync - authenticate
+startServer(app);
+
